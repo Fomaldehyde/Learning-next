@@ -67,7 +67,12 @@ export async function updateInvoice(id: string, formData: FormData) {
 }
 
 export async function deleteInvoice(id: string) {
-  await pool.query(`DELETE FROM invoices WHERE id = $1`, [id]
-  );
+  try{
+    await pool.query(`DELETE FROM invoices WHERE id = $1`, [id]
+    );
+  }catch (error) {
+    console.error(error);
+  }
+  
   revalidatePath('/dashboard/invoices');
 }
